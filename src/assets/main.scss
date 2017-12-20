@@ -1,0 +1,206 @@
+@import url("https://use.typekit.net/mqs4gjc.css");
+
+/*------------------------------------*\
+  #VARIABLES
+\*------------------------------------*/
+
+$red: #b42d21;
+$black--rich: #111a13;
+
+/*------------------------------------*\
+  #GLOBALS & RESET
+\*------------------------------------*/
+
+html,
+body,
+#root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  font-family: museo-sans-rounded, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+}
+
+/*------------------------------------*\
+  #NAV
+\*------------------------------------*/
+
+.gir-header {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  & .gir-header__nav {
+    padding: 25px 15px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    &.overlay {
+      background: rgba(255,255,255,0.2);
+      z-index: 2;
+
+      & .gir-header__background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        opacity: 0;
+        z-index: 1;
+      }
+    }
+
+
+    & .gir-header__nav-toggle {
+      flex: 0 0 80px;
+      justify-self: flex-end;
+      align-self: flex-start;
+      z-index: 6;
+    }
+
+    & .gir-header__nav-links {
+      position: relative;
+      left: 20px;
+      flex: 1 1 100%;
+      align-self: center;
+      text-align: center;
+      z-index: 5;
+
+      list-style-type: none;
+
+      & .nav-links__item,
+      & .nav-links__item a {
+        padding: 25px;
+        color: $black--rich;
+        text-decoration: none;
+        font-size: 1.5em;
+        font-family: museo-sans-condensed, sans-serif;
+        font-style: normal;
+        letter-spacing: 0.2em;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+/**
+ * Menu icon
+ * cf. https://codepen.io/designcouch/pen/lgnDJ?depth=everything&order=popularity&page=3&q=menu+icon&show_forks=false
+ */
+
+/* Grid One */
+
+.btn--unstyled,
+.btn--unstyled:hover,
+.btn--unstyled:focus {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  outline: none;
+}
+
+.gir-header__nav-toggle {
+  height:40px;
+  width:40px;
+  position:relative;
+  cursor:pointer;
+}
+
+.gir-header__nav-toggle span {
+  display:block;
+  position:absolute;
+  width:10px;
+  height:10px;
+  top:50%;
+  left:50%;
+  margin:-5px 0 0 -5px;
+  background:$black--rich;
+  box-shadow:
+    -13px -13px 0 $black--rich,
+    -13px 0 0 $black--rich,
+    -13px 13px 0 $black--rich,
+    0 -13px 0 $black--rich,
+    0 13px 0 $black--rich,
+    13px -13px 0 $black--rich,
+    13px 0 0 $black--rich,
+    13px 13px 0 $black--rich
+  ;
+  transition: all 80ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.gir-header__nav-toggle:hover span {
+  box-shadow:
+    -15px -15px 0 $black--rich,
+    -15px 0 0 $black--rich,
+    -15px 15px 0 $black--rich,
+    0 -15px 0 $black--rich,
+    0 15px 0 $black--rich,
+    15px -15px 0 $black--rich,
+    15px 0 0 $black--rich,
+    15px 15px 0 $black--rich
+  ;
+}
+
+.gir-header__nav-toggle span:before {
+  content:'';
+  display:block;
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  background:$black--rich;
+  transition: all 80ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.gir-header__nav-toggle.active span {
+  box-shadow: 0 0 0 $black--rich;
+  width:60%;
+  height:8px;
+  left:20%;
+  margin:-4px 0 0 0px;
+  transform:rotate(45deg);
+  background:$red;
+}
+
+.gir-header__nav-toggle.active span:before {
+  transform:rotate(90deg);
+  background:$red;
+}
+
+/*------------------------------------*\
+  #ROUTED COMPONENTS
+\*------------------------------------*/
+
+.gir-main {
+  padding: 10vh 5vw;
+  text-align: center;
+  filter: blur(0);
+  z-index: -1;
+  position: relative;
+  transition: all 120ms cubic-bezier(0.77, 0, 0.175, 1);
+
+  &.overlay {
+    filter: blur(3px);
+  }
+}
