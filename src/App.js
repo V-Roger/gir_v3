@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './components/home.component.js';
 import Foo from './components/foo.component.js';
-import logo from './assets/logo_vr.png';
+import placeholder from './assets/placeholder.jpg';
 
 class App extends Component {
 
@@ -37,8 +37,7 @@ class App extends Component {
             </nav>
           </header>
           <main className={ 'gir-main' + (this.state.menuDisplayed ? ' overlay' : '') }>
-            <img src={logo} className="gir-header__background"/>
-          
+            <img src={placeholder} />
             <Route exact path="/" component={Home}/>
             <Route exact path="/foo" component={Foo}/>            
           </main>
