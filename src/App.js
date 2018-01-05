@@ -5,8 +5,7 @@ import {
   Link
 } from 'react-router-dom';
 import Home from './components/home.component.js';
-import Foo from './components/foo.component.js';
-import placeholder from './assets/placeholder.jpg';
+import Gallery from './components/gallery.component.js';
 
 class App extends Component {
 
@@ -30,17 +29,19 @@ class App extends Component {
               </button>
               { this.state.menuDisplayed &&
                 <ul className="gir-header__nav-links" >
-                  <li className="nav-links__item"><Link to="/foo" onClick={ this.toggleMenu.bind(this) }>Foo</Link></li>
+                  <li className="nav-links__item"><Link to="/gallery/contrast" onClick={ this.toggleMenu.bind(this) }>Contrast</Link></li>                
+                  <li className="nav-links__item"><Link to="/gallery/collages" onClick={ this.toggleMenu.bind(this) }>Collages</Link></li>
                   <li className="nav-links__item"><Link to="/" onClick={ this.toggleMenu.bind(this) }>Home</Link></li>
                 </ul>
               }
             </nav>
           </header>
-          <main className={ 'gir-main' + (this.state.menuDisplayed ? ' overlay' : '') }>
-            <img src={placeholder} />
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/foo" component={Foo}/>            
-          </main>
+          <Route path="/">
+            <main className={ 'gir-main' + (this.state.menuDisplayed ? ' overlay' : '') }>
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/gallery/:galleryHandle" component={Gallery}/>            
+            </main>
+          </Route>
         </div>
       </Router>
     );
