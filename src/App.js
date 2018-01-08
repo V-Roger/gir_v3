@@ -27,13 +27,26 @@ class App extends Component {
               <button className={ 'btn--unstyled gir-header__nav-toggle' + (this.state.menuDisplayed ? ' active' : '') } onClick={ this.toggleMenu.bind(this) }>
                 <span></span>
               </button>
-              { this.state.menuDisplayed &&
-                <ul className="gir-header__nav-links" >
-                  <li className="nav-links__item"><Link to="/gallery/contrast" onClick={ this.toggleMenu.bind(this) }>Contrast</Link></li>                
-                  <li className="nav-links__item"><Link to="/gallery/collages" onClick={ this.toggleMenu.bind(this) }>Collages</Link></li>
-                  <li className="nav-links__item"><Link to="/" onClick={ this.toggleMenu.bind(this) }>Home</Link></li>
-                </ul>
-              }
+              <ul className="gir-header__nav-links" >
+                <li className="nav-links__item">
+                  <Link to="/" onClick={ this.toggleMenu.bind(this) }>
+                    <span className="nav-links__item-name">Home</span>
+                    <span className="nav-links__item-label">MouMouMou</span>                    
+                  </Link>
+                </li>                
+                <li className="nav-links__item">
+                  <Link to="/gallery/contrast" onClick={ this.toggleMenu.bind(this) }>
+                    <span className="nav-links__item-name">Contrast</span>
+                    <span className="nav-links__item-label">PloumPloumpPoum</span>                    
+                  </Link>
+                </li>
+                <li className="nav-links__item">
+                  <Link to="/gallery/collages" onClick={ this.toggleMenu.bind(this) }>
+                    <span className="nav-links__item-name">Collages</span>
+                    <span className="nav-links__item-label">BlupBlupBlup</span>                    
+                  </Link>
+                </li>
+              </ul>
             </nav>
           </header>
           <Route path="/">
