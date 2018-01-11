@@ -121,6 +121,7 @@ module.exports = {
           },
         ],
         include: paths.appSrc,
+        exclude: /assets/
       },
       {
         // "oneOf" will traverse all following loaders until one will
