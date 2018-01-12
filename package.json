@@ -52,6 +52,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start-lan": "NODE_ENV='lan' HOST='192.168.1.12' node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },

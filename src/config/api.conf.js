@@ -1,7 +1,13 @@
-export default {
-  baseUrl: 'http://localhost:8080',
+export default process.env.NODE_ENV === 'lan' ? {
+  baseUrl: 'http://192.168.1.12:8080',
   endpoints: {
-    galleries: 'api/collections/get',
+    collections: 'api/collections/get',
+  },
+  token: 'a207df3402bcc7a580aedb7a20b97d',
+} : {
+  baseUrl: 'http://192.168.1.12:8080',
+  endpoints: {
+    collections: 'api/collections/get',
   },
   token: 'a207df3402bcc7a580aedb7a20b97d',
 };

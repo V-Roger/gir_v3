@@ -21,12 +21,16 @@ function imagesLoaded(parentNode) {
 
 function isElementInViewport(el) {
   var rect = el.getBoundingClientRect();
-  
+
   return (
       rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&    
+      (
+        (rect.left >= 0 &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)) ||
+        (rect.right > 0 &&
+          rect.right <= ((window.innerWidth + rect.width) || (document.documentElement.clientWidth + rect.width))) 
+      )  
   );
 }
 
@@ -38,14 +42,14 @@ class Gallery extends Component {
   }
 
   componentDidMount() {
-    this.fetchGalleryData('galleries');    
+    this.fetchGalleryData('galleries');
     window.scrollConverter.activate();
     this.registerKeyboardNavigation(true);
   }
 
   componentWillUnmount() {
     window.scrollConverter.deactivate();
-    this.registerKeyboardNavigation(false);    
+    this.registerKeyboardNavigation(false);
   }
 
   registerKeyboardNavigation(state) {
@@ -58,8 +62,10 @@ class Gallery extends Component {
 
     if (e.keyCode === '37' || e.keyCode === 37) {
       this.previousPhoto();
+      e.preventDefault();
     } else if (e.keyCode === '39' || e.keyCode === 39) {
-      this.nextPhoto();      
+      this.nextPhoto();
+      e.preventDefault();
     }
 
     return false;
@@ -69,20 +75,24 @@ class Gallery extends Component {
     const visible = this.state.photos.map(img => img && isElementInViewport(img));
     let visibleIdx = visible.indexOf(true);
     visibleIdx = (visibleIdx + this.state.photos.length - 1) % this.state.photos.length;
-    this.state.photos[visibleIdx].scrollIntoView({ block: "end", inline: "nearest" });
+    this.state.photos[visibleIdx].scrollIntoView({ block: "end", inline: "end" });
   }
 
   nextPhoto() {
     const visible = this.state.photos.map(img => img && isElementInViewport(img));
     let visibleIdx = visible.lastIndexOf(true);
     visibleIdx = (visibleIdx + this.state.photos.length + 1) % this.state.photos.length;
-    this.state.photos[visibleIdx].scrollIntoView({ block: "center", inline: "nearest" });
+    if (visibleIdx === 0) {
+      this.state.photos[visibleIdx].scrollIntoView({ block: "end", inline: "end" });    
+    } else {
+      this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "start" });
+    }
   }
 
   fetchGalleryData(handle) {
     this.setState({ loading: true });
     return axios.get(
-      `${apiConf.baseUrl}/${apiConf.endpoints.galleries}/${handle}?token=${apiConf.token}`
+      `${apiConf.baseUrl}/${apiConf.endpoints.collections}/${handle}?token=${apiConf.token}`
     ).then((galleries) => {
       this.setState({ galleryData: galleries.data.entries.find(entry => entry.title_slug === this.props.match.params.galleryHandle) });
     });
@@ -116,7 +126,7 @@ class Gallery extends Component {
             <div className="gir-gallery__images">
               {
                 this.state.galleryData.photos.map(photo =>
-                  <img ref={(img) => { if (img && !this.state.loading && !this.state.photos.find(photo => img.id === photo.id)) this.state.photos.push(img) }} id={photo.meta.asset} src={`${apiConf.baseUrl}${photo.path}`} className={this.state.loading ? 'hidden' : ''} key={photo.meta.asset} alt={photo.meta.title} onLoad={this.handleImageChange.bind(this)}/>
+                  <img ref={(img) => { if (img && !this.state.loading && !this.state.photos.find(photo => img.id === photo.id)) this.state.photos.push(img) }} id={photo.meta.asset} src={`${apiConf.baseUrl}${photo.path}`} className={this.state.loading ? 'hidden' : ''} key={ photo.meta.asset } alt={ photo.meta.title } onLoad={ this.handleImageChange.bind(this) } onClick={ this.nextPhoto.bind(this) }/>
                 )
               }
             </div>

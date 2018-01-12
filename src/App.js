@@ -8,6 +8,20 @@ import Home from './components/home.component.js';
 import Gallery from './components/gallery.component.js';
 import { CSSTransition } from 'react-transition-group';
 
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
+}
 class App extends Component {
 
   constructor(props) {
@@ -30,7 +44,7 @@ class App extends Component {
               </button>
               { this.state.menuDisplayed  &&
                 <ul className="gir-header__nav-links" >
-                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide"> 
+                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">
                     <li className="nav-links__item">
                       <Link to="/" onClick={ this.toggleMenu.bind(this) }>
                         <span className="nav-links__item-name">Home</span>
@@ -38,30 +52,30 @@ class App extends Component {
                       </Link>
                     </li>
                   </CSSTransition>
-                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">                
+                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">
                   <li className="nav-links__item">
                     <Link to="/gallery/contrast" onClick={ this.toggleMenu.bind(this) }>
                       <span className="nav-links__item-name">Contrast</span>
                       <span className="nav-links__item-label">PloumPloumpPoum</span>
                     </Link>
                   </li>
-                  </CSSTransition>                
-                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">                
+                  </CSSTransition>
+                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">
                   <li className="nav-links__item">
                     <Link to="/gallery/collages" onClick={ this.toggleMenu.bind(this) }>
                       <span className="nav-links__item-name">Collages</span>
                       <span className="nav-links__item-label">BlupBlupBlup</span>
                     </Link>
                   </li>
-                  </CSSTransition>    
-                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">                
+                  </CSSTransition>
+                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">
                   <li className="nav-links__item">
                     <Link to="/gallery/please-look-up" onClick={ this.toggleMenu.bind(this) }>
                       <span className="nav-links__item-name">Please look up</span>
                       <span className="nav-links__item-label">PluPluPlu</span>
                     </Link>
                   </li>
-                  </CSSTransition>    
+                  </CSSTransition>
                 </ul>
               }
             </nav>
