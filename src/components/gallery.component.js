@@ -121,7 +121,9 @@ class Gallery extends Component {
           <article className="gir-gallery__wrapper">
               {
                 this.state.galleryData.content &&
-                <aside className="gir-gallery__description" dangerouslySetInnerHTML={ { __html: marked(this.state.galleryData.content) } }/>
+                <div className="gir-gallery__description-wrapper">
+                  <aside className="gir-gallery__description" dangerouslySetInnerHTML={ { __html: marked(this.state.galleryData.content) } }/>
+                </div>
               }
             <div className="gir-gallery__images">
               {

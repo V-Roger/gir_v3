@@ -537,14 +537,21 @@ h2 {
     height: 100%;
     min-width: 100vw;
 
-    & .gir-gallery__description {
+    & .gir-gallery__description-wrapper {
       position: fixed;
       left: 0;
       top: 0;
       width: 20%;
       height: 100%;
       padding: 60px 35px 35px 35px;
-      overflow-y: scroll;
+
+      & .gir-gallery__description {
+        -webkit-columns: 3 20vw;
+        -moz-columns: 3 20vw;
+        columns: 3 20vw;
+
+        line-height: 120px;
+      }
     }
 
     & .gir-gallery__images {
