@@ -6,6 +6,9 @@ import marked from 'marked';
 // components
 import Loader from './loader.component';
 
+// assets
+import arrow from '../assets/icon__arrow.svg';
+
 // conf
 import apiConf from '../config/api.conf.js';
 
@@ -38,7 +41,7 @@ class Gallery extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { galleryData: null, loading: true, photos: [] };
+    this.state = { galleryData: null, loading: true, photos: [], current: 0 };
   }
 
   componentDidMount() {
@@ -73,20 +76,26 @@ class Gallery extends Component {
 
   previousPhoto() {
     const visible = this.state.photos.map(img => img && isElementInViewport(img));
-    let visibleIdx = visible.indexOf(true);
-    visibleIdx = (visibleIdx + this.state.photos.length - 1) % this.state.photos.length;
-    this.state.photos[visibleIdx].scrollIntoView({ block: "end", inline: "end" });
+    let visibleIdx = visible.length > 2 ? visible.indexOf(true) : visible.indexOf(true) - 1;
+    visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length;
+
+    this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "center" });
+
+    this.setState({ current: visibleIdx });
   }
 
   nextPhoto() {
     const visible = this.state.photos.map(img => img && isElementInViewport(img));
     let visibleIdx = visible.lastIndexOf(true);
-    visibleIdx = (visibleIdx + this.state.photos.length + 1) % this.state.photos.length;
-    if (visibleIdx === 0) {
-      this.state.photos[visibleIdx].scrollIntoView({ block: "end", inline: "end" });    
-    } else {
-      this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "start" });
+    visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length;
+    
+    if (this.state.current === (this.state.photos.length - 1)) {
+      visibleIdx = 0;
     }
+
+    this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "center" });
+
+    this.setState({ current: visibleIdx });    
   }
 
   fetchGalleryData(handle) {
@@ -119,12 +128,19 @@ class Gallery extends Component {
         }
         { this.state.galleryData &&
           <article className="gir-gallery__wrapper">
-              {
-                this.state.galleryData.content &&
-                <div className="gir-gallery__description-wrapper">
-                  <aside className="gir-gallery__description" dangerouslySetInnerHTML={ { __html: marked(this.state.galleryData.content) } }/>
-                </div>
-              }
+            {
+              this.state.current > 0 &&
+              <button className="gir-gallery__control gir-gallery__control--left" onClick={ this.previousPhoto.bind(this) }>
+                <img src={arrow} alt="previous" />
+              </button>
+            }
+
+            {
+              this.state.galleryData.content &&
+              <div className="gir-gallery__description-wrapper">
+                <aside className="gir-gallery__description" dangerouslySetInnerHTML={ { __html: marked(this.state.galleryData.content) } }/>
+              </div>
+            }
             <div className="gir-gallery__images">
               {
                 this.state.galleryData.photos.map(photo =>
@@ -132,6 +148,9 @@ class Gallery extends Component {
                 )
               }
             </div>
+            <button className={ 'gir-gallery__control ' + (this.state.current === (this.state.photos.length - 1) ? 'gir-gallery__control--back' : 'gir-gallery__control--right')} onClick={ this.nextPhoto.bind(this) } >
+              <img src={arrow} alt="next" />            
+            </button>
           </article>
         }
       </section>
