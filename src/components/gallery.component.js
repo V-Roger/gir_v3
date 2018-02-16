@@ -41,7 +41,7 @@ class Gallery extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { galleryData: null, loading: true, photos: [], current: 0 };
+    this.state = { galleryData: null, loading: true, photos: [], current: null };
   }
 
   componentDidMount() {
@@ -77,6 +77,11 @@ class Gallery extends Component {
   previousPhoto() {
     const visible = this.state.photos.map(img => img && isElementInViewport(img));
     let visibleIdx = visible.length > 2 ? visible.indexOf(true) : visible.indexOf(true) - 1;
+
+    if (visible.filter(img => img === true).length === 1) {
+      visibleIdx--;
+    }
+
     visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length;
 
     this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "center" });
@@ -87,9 +92,14 @@ class Gallery extends Component {
   nextPhoto() {
     const visible = this.state.photos.map(img => img && isElementInViewport(img));
     let visibleIdx = visible.lastIndexOf(true);
+
+    if (visible.filter(img => img === true).length === 1) {
+      visibleIdx++;
+    }
+
     visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length;
     
-    if (this.state.current === (this.state.photos.length - 1)) {
+    if (this.state.current === (this.state.photos.length - 1) || this.state.current === null) {
       visibleIdx = 0;
     }
 
@@ -103,7 +113,7 @@ class Gallery extends Component {
     return axios.get(
       `${apiConf.baseUrl}/${apiConf.endpoints.collections}/${handle}?token=${apiConf.token}`
     ).then((galleries) => {
-      this.setState({ galleryData: galleries.data.entries.find(entry => entry.title_slug === this.props.match.params.galleryHandle) });
+      this.setState({ galleryData: galleries.data.entries.find(entry => entry.title_slug === this.props.match.params.galleryHandle), photos: [], current: null });
     });
   }
 
@@ -129,7 +139,7 @@ class Gallery extends Component {
         { this.state.galleryData &&
           <article className="gir-gallery__wrapper">
             {
-              this.state.current > 0 &&
+              this.state.current > 0 && !this.state.loading &&
               <button className="gir-gallery__control gir-gallery__control--left" onClick={ this.previousPhoto.bind(this) }>
                 <img src={arrow} alt="previous" />
               </button>
@@ -144,13 +154,17 @@ class Gallery extends Component {
             <div className="gir-gallery__images">
               {
                 this.state.galleryData.photos.map(photo =>
-                  <img ref={(img) => { if (img && !this.state.loading && !this.state.photos.find(photo => img.id === photo.id)) this.state.photos.push(img) }} id={photo.meta.asset} src={`${apiConf.baseUrl}${photo.path}`} className={this.state.loading ? 'hidden' : ''} key={ photo.meta.asset } alt={ photo.meta.title } onLoad={ this.handleImageChange.bind(this) } onClick={ this.nextPhoto.bind(this) }/>
+                  <img ref={(img) => { if (img && !this.state.loading && !this.state.photos.find(photo => img.id === photo.id)) this.state.photos.push(img) }} id={photo.meta.asset} src={`${apiConf.baseUrl}${photo.path}`} className={this.state.loading ? 'hidden' : ''} key={ photo.meta.asset } alt={ photo.meta.title } onLoad={ this.handleImageChange.bind(this) } />
                 )
               }
             </div>
-            <button className={ 'gir-gallery__control ' + (this.state.current === (this.state.photos.length - 1) ? 'gir-gallery__control--back' : 'gir-gallery__control--right')} onClick={ this.nextPhoto.bind(this) } >
-              <img src={arrow} alt="next" />            
-            </button>
+            {
+              !this.state.loading && 
+              <button className={ 'gir-gallery__control ' + (this.state.current === (this.state.photos.length - 1) ? 'gir-gallery__control--back' : 'gir-gallery__control--right')} onClick={ this.nextPhoto.bind(this) } >
+                <img src={arrow} alt="next" />            
+              </button>
+            }
+
           </article>
         }
       </section>
