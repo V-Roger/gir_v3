@@ -22,7 +22,7 @@ function toggleFullScreen(flag) {
   if(flag && !doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
     requestFullScreen.call(docEl);
   }
-  else if (flag !== null) {
+  if (!flag) {
     cancelFullScreen.call(doc);
   }
 }
