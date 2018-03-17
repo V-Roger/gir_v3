@@ -9,5 +9,5 @@ export default process.env.NODE_ENV === 'lan' ? {
   endpoints: {
     collections: 'api/collections/get',
   },
-  token: 'a207df3402bcc7a580aedb7a20b97d',
+  token: '36619f393928dac0f27709bf3ae809',
 };
