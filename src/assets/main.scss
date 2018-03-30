@@ -3,7 +3,7 @@
 \*------------------------------------*/
 
 $red: #b42d21;
-$black--rich: #111a13;
+$black--rich: #151111;
 $menu-items-count: 3;
 
 /*------------------------------------*\
@@ -57,7 +57,7 @@ body:after {
 }
 
 h1 {
-  font-family: "museo-sans-condensed", sans-serif;
+  font-family: "museo-sans", sans-serif;
   font-weight: 700;
 }
 
@@ -500,21 +500,6 @@ h2 {
     & .gir-home__content-feature {
       display: inline-flex;
       height: 100%;
-      // background-image: url('./logo_vr.svg');
-      // background-size: contain;
-      // background-repeat: no-repeat;
-      // background-position: bottom;
-
-      // &:after {
-      //   content: '';
-      //   display: inline-flex;
-      //   min-height: 10vh;
-      //   min-width: 10vw;
-      //   background-image: url('./logo_vr.svg');
-      //   background-size: contain;
-      //   background-repeat: no-repeat;
-      //   background-position: top;
-      // }
 
       & .gir-home__content-photo {
         z-index: -1;
@@ -531,9 +516,37 @@ h2 {
   }
 }
 
+.gir-contact {
+  height: 100%;
+  padding: 100px 15px 0 15px;
+  
+  & .gir-contact__wrapper {
+    height: 100%;
+    display: flex;
+    width: 200px;
+    margin: 0 auto;
+
+    & .gir-contact__header {
+      width: 200px;
+
+      img {
+        width: 200px;
+        position: relative;
+      }
+
+      h1 {
+        margin-top: 0;
+        font-weight: 300;
+        font-size: 72px;
+        line-height: 66px;
+      }
+    }
+  }
+}
+
 .gir-gallery {
   height: 100%;
-  min-width: 100vw;
+  min-width: 100%;
 
   & .gir-gallery__wrapper {
     height: 100%;
@@ -695,6 +708,18 @@ h2 {
         display: inline-flex;
         height: 100%;
         width: 100%;
+      }
+    }
+  }
+
+  .gir-header__nav-links {
+    & .nav-links__item a {
+      & .nav-links__item-name {
+        right: unset !important;
+      }
+
+      & .nav-links__item-label {
+        display: none !important;
       }
     }
   }

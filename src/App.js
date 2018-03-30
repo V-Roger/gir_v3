@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './components/home.component.js';
 import Gallery from './components/gallery.component.js';
+import Contact from './components/contact.component.js';
 import { CSSTransition } from 'react-transition-group';
 import axios from 'axios';
 
@@ -72,7 +73,7 @@ class App extends Component {
                   </CSSTransition>
                   {
                     this.state.menuItems && this.state.menuItems.map(item => 
-                      <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">
+                      <CSSTransition in={this.state.menuDisplayed} key={ item.title } timeout={500} classNames="fadeSlide">
                       <li className="nav-links__item">
                         <Link to={`/gallery/${item.target.display}`} onClick={ this.toggleMenu.bind(this, 'gallery') }>
                           <span className="nav-links__item-name">{ item.title }</span>
@@ -82,6 +83,14 @@ class App extends Component {
                       </CSSTransition>
                     )
                   }
+                  <CSSTransition in={this.state.menuDisplayed} timeout={500} classNames="fadeSlide">
+                    <li className="nav-links__item">
+                      <Link to="/contact" onClick={ this.toggleMenu.bind(this) }>
+                        <span className="nav-links__item-name">Contact</span>
+                        <span className="nav-links__item-label">WoWoWo</span>
+                      </Link>
+                    </li>
+                  </CSSTransition>
                 </ul>
               }
             </nav>
@@ -89,6 +98,7 @@ class App extends Component {
           <Route path="/">
             <main className={ 'gir-main' + (this.state.menuDisplayed ? ' overlay' : '') }>
               <Route exact path="/" component={Home}/>
+              <Route exact path="/contact" component={Contact}/>              
               <Route exact path="/gallery/:galleryHandle" component={Gallery}/>
             </main>
           </Route>
