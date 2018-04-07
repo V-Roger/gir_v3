@@ -3,10 +3,29 @@ import logo from '../assets/logo_vr.svg';
 // components
 import Loader from './loader.component';
 
+// lib
+import axios from 'axios';
+
+// conf
+import apiConf from '../config/api.conf.js';
+
 class Contact extends Component {
   constructor(props) {
     super(props);
-    this.state = { loading: false };
+    this.state = { pageData: null, loading: true };
+  }
+
+  componentDidMount() {
+    this.fetchPageData('pages');
+  }
+
+  fetchPageData(handle) {
+    this.setState({ loading: true });
+    return axios.get(
+      `${apiConf.baseUrl}/${apiConf.endpoints.collections}/${handle}?token=${apiConf.token}`
+    ).then((collections) => {
+      this.setState({ pageData: collections.data.entries.find(entry => entry.title_slug === 'contact'), loading: false });
+    });
   }
 
   render() {
@@ -15,11 +34,28 @@ class Contact extends Component {
       { this.state.loading &&
         <Loader/>
       }
-      {
-        <article className="gir-contact__wrapper">
+      { this.state.pageData &&
+        <article className="gir-contact__content">
+          {
+            this.state.pageData.image &&
+            <div className="gir-contact__content-feature">
+              <img className="gir-contact__content-photo" src={`${apiConf.baseUrl}/storage/uploads/${this.state.pageData.image.path}`} alt="Virgil Roger | Contact" />
+              <ul className="gir-contact__links">
+                <li className="gir-contact__link">
+                  <a href="https://www.instagram.com/mr_sumatra/" target="_blank" rel="noopener noreferrer" title="Instagram">Instagram</a>
+                </li>
+                <li className="gir-contact__link">
+                  <a href="https://www.facebook.com/virgilroger.photographie/" target="_blank" rel="noopener noreferrer" title="FB">FB</a>
+                </li>
+                <li className="gir-contact__link">
+                  <a href="mailto:roger.virgil@gmail.com" title="Mail">Email</a>
+                </li>
+              </ul>
+            </div>
+          }
           <div className="gir-contact__header">
-          <h1>Virgil Roger</h1>          
-            <img src={ logo } alt="Virgil Roger"/>
+            <img src={ logo } alt="Virgil Roger"/>        
+            <h1>Virgil Roger</h1>          
           </div>
         </article>
       }
