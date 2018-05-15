@@ -405,6 +405,13 @@ h2 {
             color: #151111;
             font-size: 24px;
             font-weight: 500; }
+    .gir-contact .gir-contact__content .gir-home__contact-text {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: calc(50% - 200px);
+      padding: 50px 50px 50px 25px;
+      text-align: left; }
   .gir-contact .gir-contact__header {
     width: 100%;
     margin-left: 50%;

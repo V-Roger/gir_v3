@@ -5,6 +5,7 @@ import Loader from './loader.component';
 
 // lib
 import axios from 'axios';
+import marked from 'marked';
 
 // conf
 import apiConf from '../config/api.conf.js';
@@ -57,6 +58,10 @@ class Contact extends Component {
             <img src={ logo } alt="Virgil Roger"/>        
             <h1>Virgil Roger</h1>          
           </div>
+          {
+            this.state.pageData.content &&
+            <aside className="gir-home__contact-text" dangerouslySetInnerHTML={ { __html: marked(this.state.pageData.content) } }/>
+          }
         </article>
       }
       </section>
