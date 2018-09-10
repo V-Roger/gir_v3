@@ -529,6 +529,7 @@ h2 {
     align-self: flex-start;
     z-index: 100; }
   .gir-main {
+    height: 100%;
     padding: 15px;
     top: -15px; }
   .gir-home .gir-home__content {
