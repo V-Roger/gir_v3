@@ -583,18 +583,18 @@ h2 {
       max-width: 100vw; }
   .gir-gallery .gir-gallery__wrapper .gir-gallery__control {
     top: 100%;
-    margin-bottom: -95px;
+    margin-bottom: -65px;
     height: 38px;
     width: 38px; }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__control.gir-gallery__control--left {
       left: calc(50% - 44px); }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__control.gir-gallery__control--right, .gir-gallery .gir-gallery__wrapper .gir-gallery__control.gir-gallery__control--back {
-      margin-bottom: -50px;
+      margin-bottom: -20px;
       right: calc(50% - 43px);
       margin-left: -1px; }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__control.gir-gallery__control--left ~ .gir-gallery__control--right,
     .gir-gallery .gir-gallery__wrapper .gir-gallery__control.gir-gallery__control--left ~ .gir-gallery__control--back {
-      margin-bottom: -95px !important;
+      margin-bottom: -65px !important;
       margin-left: 0 !important; }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__control.gir-gallery__control--back:after {
       width: 25px;
