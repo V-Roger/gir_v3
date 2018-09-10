@@ -136,15 +136,9 @@ class Gallery extends Component {
         { this.state.loading &&
           <Loader/>
         }
+
         { this.state.galleryData &&
           <article className="gir-gallery__wrapper">
-            {
-              this.state.current > 0 && !this.state.loading &&
-              <button className="gir-gallery__control gir-gallery__control--left" onClick={ this.previousPhoto.bind(this) }>
-                <img src={arrow} alt="previous" />
-              </button>
-            }
-
             {
               this.state.galleryData.content &&
               <div className="gir-gallery__description-wrapper">
@@ -153,18 +147,23 @@ class Gallery extends Component {
             }
             <div className="gir-gallery__images">
               {
+                this.state.current > 0 && !this.state.loading &&
+                <button className="gir-gallery__control gir-gallery__control--left" onClick={ this.previousPhoto.bind(this) }>
+                  <img src={arrow} alt="previous" />
+                </button>
+              }
+              {
                 this.state.galleryData.photos.map(photo =>
                   <img ref={(img) => { if (img && !this.state.loading && !this.state.photos.find(photo => img.id === photo.id)) this.state.photos.push(img) }} id={photo.meta.asset} src={`${apiConf.baseUrl}${photo.path}`} className={this.state.loading ? 'hidden' : ''} key={ photo.meta.asset } alt={ photo.meta.title } onLoad={ this.handleImageChange.bind(this) } />
                 )
               }
+              {
+                !this.state.loading && 
+                <button className={ 'gir-gallery__control ' + (this.state.current === (this.state.photos.length - 1) ? 'gir-gallery__control--back' : 'gir-gallery__control--right')} onClick={ this.nextPhoto.bind(this) } >
+                  <img src={arrow} alt="next" />            
+                </button>
+              }
             </div>
-            {
-              !this.state.loading && 
-              <button className={ 'gir-gallery__control ' + (this.state.current === (this.state.photos.length - 1) ? 'gir-gallery__control--back' : 'gir-gallery__control--right')} onClick={ this.nextPhoto.bind(this) } >
-                <img src={arrow} alt="next" />            
-              </button>
-            }
-
           </article>
         }
       </section>

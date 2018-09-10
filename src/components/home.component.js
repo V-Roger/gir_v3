@@ -5,6 +5,9 @@ import marked from 'marked';
 // components
 import Loader from './loader.component';
 
+// assets
+import logo from '../assets/logo_vr.svg';
+
 // conf
 import apiConf from '../config/api.conf.js';
 
@@ -42,6 +45,10 @@ class Home extends Component {
                 <img className="gir-home__content-photo" src={`${apiConf.baseUrl}/storage/uploads/${this.state.pageData.image.path}`} alt="Virgil Roger | Accueil" />
               </div>
             }
+              <div className="gir-home__content-logo">
+                <img src={ logo } alt="Virgil Roger"/>        
+                <h1>Virgil<br/>Roger</h1>          
+              </div>
             {
               this.state.pageData.content &&
               <aside className="gir-home__content-text" dangerouslySetInnerHTML={ { __html: marked(this.state.pageData.content) } }/>
