@@ -58,11 +58,11 @@ class App extends Component {
   }
 
   toggleMenu(target) {
-    if (target && target === 'gallery') {
-      toggleFullScreen(true);
-    } else if (target) {
-      toggleFullScreen(false);
-    }
+    // if (target && target === 'gallery') {
+    //   toggleFullScreen(true);
+    // } else if (target) {
+    //   toggleFullScreen(false);
+    // }
     this.setState({ menuDisplayed: !this.state.menuDisplayed });
     if (this.state.menuDisplayed) {
       window.scrollConverter.activate()
@@ -84,7 +84,9 @@ class App extends Component {
       return;
     }
     const ratio = Math.floor((menuBox.top + menuBox.height) / 8);
-    const idx = Math.floor((Math.abs(menuBox.top) / ratio)) - 1;
+    let idx = Math.floor((Math.abs(menuBox.top) / ratio)) - 1;
+    if (idx < 1) idx = 1;
+    if (idx > 4) idx = 4;
     this.setState({ navScrollIndicator: idx })
   }
 
@@ -96,7 +98,7 @@ class App extends Component {
     if (menuBox.height < window.innerHeight) {
       return;
     }
-    const ratio = Math.floor((menuBox.top + menuBox.height) / 8);
+    const ratio = Math.floor((menuBox.top + menuBox.height) / 4);
     document.querySelector('.gir-header__nav').scrollTo(0, idx * ratio);
   }
 
@@ -112,10 +114,10 @@ class App extends Component {
                 <button onClick={ this.scrollToIdx.bind(this, 2) } className={ 'nav__item' + (this.state.navScrollIndicator === 2 ? ' nav__item--current' : '') } aria-label="2/8th of menu"></button>
                 <button onClick={ this.scrollToIdx.bind(this, 3) } className={ 'nav__item' + (this.state.navScrollIndicator === 3 ? ' nav__item--current' : '') } aria-label="3/8th of menu"></button>
                 <button onClick={ this.scrollToIdx.bind(this, 4) } className={ 'nav__item' + (this.state.navScrollIndicator === 4 ? ' nav__item--current' : '') } aria-label="4/8th of menu"></button>
-                <button onClick={ this.scrollToIdx.bind(this, 5) } className={ 'nav__item' + (this.state.navScrollIndicator === 5 ? ' nav__item--current' : '') } aria-label="5/8th of menu"></button>
+                {/* <button onClick={ this.scrollToIdx.bind(this, 5) } className={ 'nav__item' + (this.state.navScrollIndicator === 5 ? ' nav__item--current' : '') } aria-label="5/8th of menu"></button>
                 <button onClick={ this.scrollToIdx.bind(this, 6) } className={ 'nav__item' + (this.state.navScrollIndicator === 6 ? ' nav__item--current' : '') } aria-label="6/8th of menu"></button>
                 <button onClick={ this.scrollToIdx.bind(this, 7) } className={ 'nav__item' + (this.state.navScrollIndicator === 7 ? ' nav__item--current' : '') } aria-label="7/8th of menu"></button>
-                <button onClick={ this.scrollToIdx.bind(this, 8) } className={ 'nav__item' + (this.state.navScrollIndicator === 8 ? ' nav__item--current' : '') } aria-label="End of menu"></button>
+                <button onClick={ this.scrollToIdx.bind(this, 8) } className={ 'nav__item' + (this.state.navScrollIndicator === 8 ? ' nav__item--current' : '') } aria-label="End of menu"></button> */}
               </nav>
             </aside>
             }
