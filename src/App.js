@@ -45,7 +45,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { menuDisplayed: false, loading: false, menuItems: [], navScrollIndicator: 1, indicatorDisplayed: true };
+    this.state = { menuDisplayed: false, loading: false, menuItems: [], navScrollIndicator: 1, indicatorDisplayed: true, indicatorSteps: 4 };
   }
 
   componentDidMount() {
@@ -66,10 +66,10 @@ class App extends Component {
     this.setState({ menuDisplayed: !this.state.menuDisplayed });
     if (this.state.menuDisplayed) {
       window.scrollConverter.activate()
-      document.querySelector('.gir-header__nav').removeEventListener('scroll', debounced(50, this.navScrollIndicatorHandler.bind(this)))
+      document.querySelector('.gir-header__nav').removeEventListener('scroll', debounced(25, this.navScrollIndicatorHandler.bind(this)))
     } else {
       window.scrollConverter.deactivate()
-      document.querySelector('.gir-header__nav').addEventListener('scroll', debounced(50, this.navScrollIndicatorHandler.bind(this)))
+      document.querySelector('.gir-header__nav').addEventListener('scroll', debounced(25, this.navScrollIndicatorHandler.bind(this)))
     }
   }
 
@@ -78,16 +78,28 @@ class App extends Component {
       this.setState({ navScrollIndicator: 1 });
       return;
     }
-    const menuBox = document.querySelector('.gir-header__nav-links').getBoundingClientRect();
+    
+    const container = document.querySelector('.gir-header__nav');
+    const menu = document.querySelector('.gir-header__nav-links')
+    const menuBox = menu.getBoundingClientRect();
     if (menuBox.height < window.innerHeight) {
       this.setState({ navScrollIndicator: 1, indicatorDisplayed: false });
       return;
     }
-    const ratio = Math.floor((menuBox.top + menuBox.height) / 8);
-    let idx = Math.floor((Math.abs(menuBox.top) / ratio)) - 1;
+
+    const minPixel = container.offsetTop;
+    const maxPixel = minPixel + container.scrollHeight;
+    const value = container.scrollTop;
+    
+    // respect bounds of element
+    let percent = (value - minPixel) / (maxPixel - minPixel);
+    percent = Math.min(1,Math.max(percent, 0)) * 100;
+
+    let idx = Math.floor((percent / this.state.indicatorSteps)) - 1;
     if (idx < 1) idx = 1;
-    if (idx > 4) idx = 4;
-    this.setState({ navScrollIndicator: idx })
+    if (idx > this.state.indicatorSteps) idx = this.state.indicatorSteps;
+
+    this.setState({ navScrollIndicator: idx });
   }
 
   scrollToIdx(idx) {
