@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo_vr.svg';
+import fbLogo from '../assets/facebook-logo--100x.png';
+import igLogo from '../assets/instagram-logo--96x.png';
+import emailLogo from '../assets/email-logo--128x.png';
+
 // components
 import Loader from './loader.component';
 
@@ -43,20 +47,20 @@ class Contact extends Component {
               <img className="gir-contact__content-photo" src={`${apiConf.baseUrl}/storage/uploads/${this.state.pageData.image.path}`} alt="Virgil Roger | Contact" />
               <ul className="gir-contact__links">
                 <li className="gir-contact__link">
-                  <a href="https://www.instagram.com/mr_sumatra/" target="_blank" rel="noopener noreferrer" title="Instagram">Instagram</a>
+                  <a href="https://www.instagram.com/mr_sumatra/" target="_blank" rel="noopener noreferrer" title="Instagram"><img src={ igLogo } alt="Virgil Roger sur Instagram" /></a>
                 </li>
                 <li className="gir-contact__link">
-                  <a href="https://www.facebook.com/virgilroger.photographie/" target="_blank" rel="noopener noreferrer" title="FB">FB</a>
+                  <a href="https://www.facebook.com/virgilroger.photographie/" target="_blank" rel="noopener noreferrer" title="FB"><img className="fb-icon" src={ fbLogo } alt="Virgil Roger sur Facebook" /></a>
                 </li>
                 <li className="gir-contact__link">
-                  <a href="mailto:roger.virgil@gmail.com" title="Mail">Email</a>
+                  <a href="mailto:roger.virgil@gmail.com" title="Mail"><img src={ emailLogo } alt="Contacter par email" /></a>
                 </li>
               </ul>
             </div>
           }
           <div className="gir-contact__header">
-            <img src={ logo } alt="Virgil Roger"/>        
-            <h1>Virgil Roger</h1>          
+            <img src={ logo } alt="Virgil Roger"/>
+            <h1>Virgil<br/>Roger</h1>
           </div>
           {
             this.state.pageData.content &&
