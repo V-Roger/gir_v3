@@ -80,13 +80,6 @@ class App extends Component {
     }
     
     const container = document.querySelector('.gir-header__nav');
-    const menu = document.querySelector('.gir-header__nav-links')
-    const menuBox = menu.getBoundingClientRect();
-    if (menuBox.height < window.innerHeight) {
-      this.setState({ navScrollIndicator: 1, indicatorDisplayed: false });
-      return;
-    }
-
     const minPixel = container.offsetTop;
     const maxPixel = minPixel + container.scrollHeight;
     const value = container.scrollTop;
