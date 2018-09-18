@@ -119,10 +119,6 @@ class App extends Component {
                 <button onClick={ this.scrollToIdx.bind(this, 2) } className={ 'nav__item' + (this.state.navScrollIndicator === 2 ? ' nav__item--current' : '') } aria-label="2/8th of menu"></button>
                 <button onClick={ this.scrollToIdx.bind(this, 3) } className={ 'nav__item' + (this.state.navScrollIndicator === 3 ? ' nav__item--current' : '') } aria-label="3/8th of menu"></button>
                 <button onClick={ this.scrollToIdx.bind(this, 4) } className={ 'nav__item' + (this.state.navScrollIndicator === 4 ? ' nav__item--current' : '') } aria-label="4/8th of menu"></button>
-                {/* <button onClick={ this.scrollToIdx.bind(this, 5) } className={ 'nav__item' + (this.state.navScrollIndicator === 5 ? ' nav__item--current' : '') } aria-label="5/8th of menu"></button>
-                <button onClick={ this.scrollToIdx.bind(this, 6) } className={ 'nav__item' + (this.state.navScrollIndicator === 6 ? ' nav__item--current' : '') } aria-label="6/8th of menu"></button>
-                <button onClick={ this.scrollToIdx.bind(this, 7) } className={ 'nav__item' + (this.state.navScrollIndicator === 7 ? ' nav__item--current' : '') } aria-label="7/8th of menu"></button>
-                <button onClick={ this.scrollToIdx.bind(this, 8) } className={ 'nav__item' + (this.state.navScrollIndicator === 8 ? ' nav__item--current' : '') } aria-label="End of menu"></button> */}
               </nav>
             </aside>
             }
@@ -141,7 +137,7 @@ class App extends Component {
                     </li>
                   </CSSTransition>
                   {
-                    this.state.menuItems && this.state.menuItems.map(item =>
+                    this.state.menuItems && this.state.menuItems.filter(item => item.published).map(item =>
                       <CSSTransition in={this.state.menuDisplayed} key={ item.title } timeout={500} classNames="fadeSlide">
                       <li className="nav-links__item">
                         <Link to={`/gallery/${item.target.display}`} onClick={ this.toggleMenu.bind(this, 'gallery') }>
