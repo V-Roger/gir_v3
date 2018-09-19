@@ -1001,14 +1001,15 @@ h2 {
   .gir-gallery {
     & .gir-gallery__wrapper {
       & .gir-gallery__description-wrapper {
-        min-width: 90%;
+        padding: 35px;
+        min-width: 95%;
       }
 
       & .gir-gallery__description {
         width: 100%;
-        -webkit-columns: 3 90vw;
-        -moz-columns: 3 90vw;
-        columns: 3 90vw;
+        padding-right: 15px;
+        max-height: 100%;
+        overflow-y: auto;
       }
 
       & .gir-gallery__images {

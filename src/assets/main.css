@@ -708,12 +708,13 @@ h2 {
     .gir-header__nav-links .nav-links__item a .nav-links__item-label {
       display: none !important; }
   .gir-gallery .gir-gallery__wrapper .gir-gallery__description-wrapper {
-    min-width: 90%; }
+    padding: 35px;
+    min-width: 95%; }
   .gir-gallery .gir-gallery__wrapper .gir-gallery__description {
     width: 100%;
-    -webkit-columns: 3 90vw;
-    -moz-columns: 3 90vw;
-    columns: 3 90vw; }
+    padding-right: 15px;
+    max-height: 100%;
+    overflow-y: auto; }
   .gir-gallery .gir-gallery__wrapper .gir-gallery__images {
     left: calc(100% - 54px);
     padding-bottom: 85px;

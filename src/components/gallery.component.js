@@ -46,7 +46,12 @@ class Gallery extends Component {
 
   componentDidMount() {
     this.fetchGalleryData('galleries');
-    window.scrollConverter.activate();
+    const width = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
+    if (width > 900)  {
+      window.scrollConverter.activate();
+    }
     this.registerKeyboardNavigation(true);
   }
 
