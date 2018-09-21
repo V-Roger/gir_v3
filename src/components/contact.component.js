@@ -60,7 +60,7 @@ class Contact extends Component {
           }
           <div className="gir-contact__header">
             <img src={ logo } alt="Virgil Roger"/>
-            <h1>Virgil<br/>Roger</h1>
+            {/* <h1>Virgil<br/>Roger</h1> */}
           </div>
           {
             this.state.pageData.content &&

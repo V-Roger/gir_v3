@@ -53,7 +53,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "PORT=3001 node scripts/start.js",
     "start-lan": "NODE_ENV='lan' HOST='192.168.1.11' node scripts/start.js",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",

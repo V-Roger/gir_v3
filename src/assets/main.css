@@ -43,6 +43,9 @@ strong,
 b {
   font-weight: 700; }
 
+em {
+  font-style: italic; }
+
 .hidden {
   visibility: hidden;
   height: 0 !important; }
@@ -54,6 +57,13 @@ h1 {
 h2 {
   font-family: "museo-sans-condensed", sans-serif;
   font-weight: 300; }
+
+h3 {
+  font-family: "museo-sans-condensed", sans-serif;
+  font-weight: 300; }
+
+ul {
+  list-style-type: square; }
 
 /*------------------------------------*  #LOADER
 \*------------------------------------*/
@@ -219,7 +229,7 @@ h2 {
         transform-origin: 0% 50%; }
     .gir-header .gir-header__nav.overlay {
       z-index: 5;
-      height: calc(100vh - 30px);
+      height: calc(100vh - 3px);
       max-width: 100vw;
       overflow-y: auto;
       overflow-x: hidden; }
@@ -393,7 +403,7 @@ h2 {
 \*------------------------------------*/
 .gir-main {
   width: 100%;
-  height: calc(100% - 30px);
+  height: calc(100% - 31px);
   text-align: center;
   z-index: -1;
   position: relative;
@@ -504,6 +514,36 @@ h2 {
       width: calc(50% - 200px);
       padding: 50px 50px 50px 25px;
       text-align: left; }
+      .gir-contact .gir-contact__content .gir-home__contact-text h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        position: relative;
+        width: 100%; }
+      .gir-contact .gir-contact__content .gir-home__contact-text p + h1,
+      .gir-contact .gir-contact__content .gir-home__contact-text ul + h1 {
+        margin-top: 85px; }
+      .gir-contact .gir-contact__content .gir-home__contact-text hr {
+        position: relative;
+        top: 15px;
+        left: 25%;
+        margin: 60px 0;
+        overflow: visible;
+        /* For IE */
+        padding: 0;
+        width: 50%;
+        border: none;
+        border-top: medium double #151111;
+        color: #b42d21;
+        text-align: center; }
+        .gir-contact .gir-contact__content .gir-home__contact-text hr:after {
+          content: "§";
+          display: inline-block;
+          position: relative;
+          top: -0.65em;
+          font-size: 1.5em;
+          padding: 0 0.15em;
+          background: white; }
   .gir-contact .gir-contact__header {
     width: 100%;
     margin-left: 50%;
@@ -530,7 +570,7 @@ h2 {
     min-width: 100vw; }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__video {
       position: relative;
-      max-width: 50vw;
+      max-width: calc(50% - 30px);
       margin: 0 auto; }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__description-wrapper {
       padding: 60px 35px 35px 35px; }

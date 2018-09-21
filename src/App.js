@@ -66,10 +66,10 @@ class App extends Component {
     // }
     this.setState({ menuDisplayed: !this.state.menuDisplayed });
     if (this.state.menuDisplayed) {
-      window.scrollConverter.activate()
+      if (target === 'gallery') window.scrollConverter.activate()
+      else window.scrollConverter.deactivate()
       document.querySelector('.gir-header__nav').removeEventListener('scroll', debounced(25, this.navScrollIndicatorHandler.bind(this)))
     } else {
-      window.scrollConverter.deactivate()
       document.querySelector('.gir-header__nav').addEventListener('scroll', debounced(25, this.navScrollIndicatorHandler.bind(this)))
     }
   }
@@ -89,7 +89,7 @@ class App extends Component {
     let percent = (value - minPixel) / (maxPixel - minPixel);
     percent = Math.min(1,Math.max(percent, 0)) * 100;
 
-    let idx = Math.floor((percent / this.state.indicatorSteps)) - 1;
+    let idx = Math.floor((percent / this.state.indicatorSteps)) * 2 - 1;
     if (idx < 1) idx = 1;
     if (idx > this.state.indicatorSteps) idx = this.state.indicatorSteps;
 

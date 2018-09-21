@@ -37,7 +37,7 @@ class VideoGallery extends Component {
 
   render() {
     return(
-      <section className="gir-gallery" ref="gallery">
+      <section className="gir-gallery gir-video-gallery" ref="gallery">
         { this.state.loading &&
           <Loader/>
         }
