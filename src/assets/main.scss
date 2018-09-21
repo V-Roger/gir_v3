@@ -51,6 +51,11 @@ body:after {
   font-weight: 300;
 }
 
+strong,
+b {
+  font-weight: 700;
+}
+
 .hidden {
   visibility: hidden;
   height: 0 !important;
@@ -720,12 +725,20 @@ h2 {
     height: 100%;
     min-width: 100vw;
 
+    & .gir-gallery__video {
+      position: relative;
+      max-width: 50vw;
+      margin: 0 auto;
+    }
+
     & .gir-gallery__description-wrapper {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 50%;
-      height: 100%;
+      &:not(.gir-gallery__video-description-wrapper) {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 50%;
+        height: 100%;
+      }
       padding: 60px 35px 35px 35px;
 
       & .gir-gallery__description {
@@ -735,6 +748,13 @@ h2 {
         & h1 {
           text-align: center;
           text-transform: uppercase;
+          font-size: 1.5em;
+          position: relative;
+          width: 100%;
+        }
+
+        & h2 {
+          text-align: center;
           font-size: 1.5em;
           position: relative;
           width: 100%;
@@ -1020,6 +1040,12 @@ h2 {
 
   .gir-gallery {
     & .gir-gallery__wrapper {
+      & .gir-gallery__video {
+        position: relative;
+        left: -15px;
+        max-width: calc(100vw - 30px);
+      }
+
       & .gir-gallery__description-wrapper {
         padding: 35px;
         min-width: 95%;

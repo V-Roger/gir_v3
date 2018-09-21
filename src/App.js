@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './components/home.component.js';
 import Gallery from './components/gallery.component.js';
+import VideoGallery from './components/video.component.js';
 import Contact from './components/contact.component.js';
 import { CSSTransition } from 'react-transition-group';
 import axios from 'axios';
@@ -13,20 +14,20 @@ import axios from 'axios';
 // conf
 import apiConf from './config/api.conf.js';
 
-function toggleFullScreen(flag) {
-  var doc = window.document;
-  var docEl = doc.documentElement;
+// function toggleFullScreen(flag) {
+//   var doc = window.document;
+//   var docEl = doc.documentElement;
 
-  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+//   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+//   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-  if(flag && !doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-    requestFullScreen.call(docEl);
-  }
-  if (!flag) {
-    cancelFullScreen.call(doc);
-  }
-}
+//   if(flag && !doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+//     requestFullScreen.call(docEl);
+//   }
+//   if (!flag) {
+//     cancelFullScreen.call(doc);
+//   }
+// }
 
 // ES6
 function debounced(delay, fn) {
@@ -140,7 +141,7 @@ class App extends Component {
                     this.state.menuItems && this.state.menuItems.filter(item => item.published).map(item =>
                       <CSSTransition in={this.state.menuDisplayed} key={ item.title } timeout={500} classNames="fadeSlide">
                       <li className="nav-links__item">
-                        <Link to={`/gallery/${item.target.display}`} onClick={ this.toggleMenu.bind(this, 'gallery') }>
+                        <Link to={`/${item.video_target ? 'video' : 'gallery'}/${item.video_target ? item.video_target.display : item.target.display}`} onClick={ this.toggleMenu.bind(this, 'gallery') }>
                           <span className="nav-links__item-name">{ item.title }</span>
                           <span className="nav-links__item-label">{ item.subtitle }</span>
                         </Link>
@@ -165,6 +166,7 @@ class App extends Component {
               <Route exact path="/" component={Home}/>
               <Route exact path="/contact" component={Contact}/>
               <Route exact path="/gallery/:galleryHandle" component={Gallery}/>
+              <Route exact path="/video/:videoHandle" component={VideoGallery}/>
             </main>
           </Route>
         </div>
