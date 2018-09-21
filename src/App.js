@@ -10,6 +10,7 @@ import VideoGallery from './components/video.component.js';
 import Contact from './components/contact.component.js';
 import { CSSTransition } from 'react-transition-group';
 import axios from 'axios';
+import cheet from 'cheet.js';
 
 // conf
 import apiConf from './config/api.conf.js';
@@ -51,6 +52,10 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
+    cheet('↑ ↑ ↓ ↓ ← → ← → b a', () => {
+      document.body.classList.toggle('cheeted');
+      document.body.classList.contains('cheeted') ? window.scrollConverter.deactivate() : window.scrollConverter.activate();
+    });
     return axios.get(
       `${apiConf.baseUrl}/${apiConf.endpoints.collections}/menu?token=${apiConf.token}`
     ).then((menu) => {
