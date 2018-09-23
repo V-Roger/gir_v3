@@ -158,7 +158,7 @@ class App extends Component {
                     this.state.menuItems && this.state.menuItems.filter(item => item.published && item.external && item.external_link).map(item =>
                       <CSSTransition in={this.state.menuDisplayed} key={ item.title } timeout={500} classNames="fadeSlide">
                         <li className="nav-links__item">
-                          <a href={`${item.external_link}`} onClick={ this.toggleMenu.bind(this) } target="_blank">
+                          <a href={`${item.external_link}`} onClick={ this.toggleMenu.bind(this) } target="_self">
                             <span className="nav-links__item-name">{ item.title }</span>
                             <span className="nav-links__item-label">{ item.subtitle }</span>
                           </a>
