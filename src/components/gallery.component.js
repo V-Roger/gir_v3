@@ -1,32 +1,30 @@
 // libs
-import React, { Component } from 'react';
-import axios from 'axios';
-import marked from 'marked';
-
+import React, { Component } from 'react'
+import axios from 'axios'
+import marked from 'marked'
 // components
-import Loader from './loader.component';
-
+import Loader from './loader.component'
 // assets
-import arrow from '../assets/icon__arrow.svg';
+import arrow from '../assets/icon__arrow.svg'
 
 // conf
-import apiConf from '../config/api.conf.js';
+import apiConf from '../config/api.conf.js'
 
 function imagesLoaded(parentNode) {
-  const imgElements = parentNode.querySelectorAll('img');
+  const imgElements = parentNode.querySelectorAll('img')
   for (const img of imgElements) {
     if (!img.complete) {
-      return false;
+      return false
     }
   }
-  return true;
+  return true
 }
 
 function isElementInViewport(el) {
-  var rect = el.getBoundingClientRect();
+  var rect = el.getBoundingClientRect()
 
   return (
-      rect.top >= 0 &&
+    rect.top >= 0 &&
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&    
       (
         (rect.left >= 0 &&
@@ -34,105 +32,105 @@ function isElementInViewport(el) {
         (rect.right > 0 &&
           rect.right <= ((window.innerWidth + rect.width) || (document.documentElement.clientWidth + rect.width))) 
       )  
-  );
+  )
 }
 
 class Gallery extends Component {
 
   constructor(props) {
-    super(props);
-    this.state = { galleryData: null, loading: true, photos: [], current: null };
+    super(props)
+    this.state = { galleryData: null, loading: true, photos: [], current: null }
   }
 
   componentDidMount() {
-    this.fetchGalleryData('galleries');
+    this.fetchGalleryData('galleries')
     const width = window.innerWidth
       || document.documentElement.clientWidth
-      || document.body.clientWidth;
+      || document.body.clientWidth
     if (width > 900)  {
-      window.scrollConverter.activate();
+      window.scrollConverter.activate()
     }
-    this.registerKeyboardNavigation(true);
+    this.registerKeyboardNavigation(true)
   }
 
   componentWillUnmount() {
-    window.scrollConverter.deactivate();
-    this.registerKeyboardNavigation(false);
+    window.scrollConverter.deactivate()
+    this.registerKeyboardNavigation(false)
   }
 
   registerKeyboardNavigation(state) {
     if(state) window.addEventListener('keydown', this.handleKeyPress.bind(this))
-    else window.removeEventListener('keydown', this.handleKeyPress.bind(this));
+    else window.removeEventListener('keydown', this.handleKeyPress.bind(this))
   }
 
   handleKeyPress(e) {
-    e = e || window.event;
+    e = e || window.event
 
     if (e.keyCode === '37' || e.keyCode === 37) {
-      this.previousPhoto();
-      e.preventDefault();
+      this.previousPhoto()
+      e.preventDefault()
     } else if (e.keyCode === '39' || e.keyCode === 39) {
-      this.nextPhoto();
-      e.preventDefault();
+      this.nextPhoto()
+      e.preventDefault()
     }
 
-    return false;
+    return false
   }
 
   previousPhoto() {
-    const visible = this.state.photos.map(img => img && isElementInViewport(img));
-    let visibleIdx = visible.length > 2 ? visible.indexOf(true) : visible.indexOf(true) - 1;
+    const visible = this.state.photos.map(img => img && isElementInViewport(img))
+    let visibleIdx = visible.length > 2 ? visible.indexOf(true) : visible.indexOf(true) - 1
 
     if (visible.filter(img => img === true).length === 1) {
-      visibleIdx--;
+      visibleIdx--
     }
 
-    visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length;
+    visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length
 
-    this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "center" });
+    this.state.photos[visibleIdx].scrollIntoView({ block: 'start', inline: 'center' })
 
-    this.setState({ current: visibleIdx });
+    this.setState({ current: visibleIdx })
   }
 
   nextPhoto() {
-    const visible = this.state.photos.map(img => img && isElementInViewport(img));
-    let visibleIdx = visible.lastIndexOf(true);
+    const visible = this.state.photos.map(img => img && isElementInViewport(img))
+    let visibleIdx = visible.lastIndexOf(true)
 
     if (visible.filter(img => img === true).length === 1) {
-      visibleIdx++;
+      visibleIdx++
     }
 
-    visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length;
+    visibleIdx = (visibleIdx + this.state.photos.length) % this.state.photos.length
     
     if (this.state.current === (this.state.photos.length - 1) || this.state.current === null) {
-      visibleIdx = 0;
+      visibleIdx = 0
     }
 
-    this.state.photos[visibleIdx].scrollIntoView({ block: "start", inline: "center" });
+    this.state.photos[visibleIdx].scrollIntoView({ block: 'start', inline: 'center' })
 
-    this.setState({ current: visibleIdx });    
+    this.setState({ current: visibleIdx })    
   }
 
   fetchGalleryData(handle) {
-    this.setState({ loading: true });
+    this.setState({ loading: true })
     return axios.get(
       `${apiConf.baseUrl}/${apiConf.endpoints.collections}/${handle}?token=${apiConf.token}`
     ).then((galleries) => {
-      this.setState({ galleryData: galleries.data.entries.find(entry => entry.title_slug === this.props.match.params.galleryHandle), photos: [], current: null });
-    });
+      this.setState({ galleryData: galleries.data.entries.find(entry => entry.title_slug === this.props.match.params.galleryHandle), photos: [], current: null })
+    })
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.galleryData || this.state.galleryData.title_slug !== nextProps.match.params.galleryHandle) {
-      this.fetchGalleryData('galleries');
+      this.fetchGalleryData('galleries')
     }
   }
 
   handleImageChange() {
-    const galleryElement = this.refs.gallery;
+    const galleryElement = this.refs.gallery
     this.setState({
       loading: !imagesLoaded(galleryElement),
-    });
+    })
   }
 
   render() {
@@ -172,8 +170,8 @@ class Gallery extends Component {
           </article>
         }
       </section>
-    );
+    )
   }
-};
+}
 
-export default Gallery;
+export default Gallery

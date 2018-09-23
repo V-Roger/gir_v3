@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom';
-import Home from './components/home.component.js';
-import Gallery from './components/gallery.component.js';
-import VideoGallery from './components/video.component.js';
-import Contact from './components/contact.component.js';
-import { CSSTransition } from 'react-transition-group';
-import axios from 'axios';
-import cheet from 'cheet.js';
+} from 'react-router-dom'
+import Home from './components/home.component.js'
+import Gallery from './components/gallery.component.js'
+import VideoGallery from './components/video.component.js'
+import Contact from './components/contact.component.js'
+import { CSSTransition } from 'react-transition-group'
+import axios from 'axios'
+import cheet from 'cheet.js'
 
 // conf
-import apiConf from './config/api.conf.js';
+import apiConf from './config/api.conf.js'
 
 // function toggleFullScreen(flag) {
 //   var doc = window.document;
@@ -32,35 +32,35 @@ import apiConf from './config/api.conf.js';
 
 // ES6
 function debounced(delay, fn) {
-  let timerId;
+  let timerId
   return function (...args) {
     if (timerId) {
-      clearTimeout(timerId);
+      clearTimeout(timerId)
     }
     timerId = setTimeout(() => {
-      fn(...args);
-      timerId = null;
-    }, delay);
+      fn(...args)
+      timerId = null
+    }, delay)
   }
 }
 class App extends Component {
 
   constructor(props) {
-    super(props);
-    this.state = { menuDisplayed: false, loading: false, menuItems: [], navScrollIndicator: 1, indicatorDisplayed: true, indicatorSteps: 4 };
+    super(props)
+    this.state = { menuDisplayed: false, loading: false, menuItems: [], navScrollIndicator: 1, indicatorDisplayed: true, indicatorSteps: 4 }
   }
 
   componentDidMount() {
-    this.setState({ loading: true });
+    this.setState({ loading: true })
     cheet('↑ ↑ ↓ ↓ ← → ← → b a', () => {
-      document.body.classList.toggle('cheeted');
-      document.body.classList.contains('cheeted') ? window.scrollConverter.deactivate() : window.scrollConverter.activate();
-    });
+      document.body.classList.toggle('cheeted')
+      document.body.classList.contains('cheeted') ? window.scrollConverter.deactivate() : window.scrollConverter.activate()
+    })
     return axios.get(
       `${apiConf.baseUrl}/${apiConf.endpoints.collections}/menu?token=${apiConf.token}`
     ).then((menu) => {
-      this.setState({ menuItems: menu.data.entries });
-    });
+      this.setState({ menuItems: menu.data.entries })
+    })
   }
 
   toggleMenu(target) {
@@ -69,7 +69,7 @@ class App extends Component {
     // } else if (target) {
     //   toggleFullScreen(false);
     // }
-    this.setState({ menuDisplayed: !this.state.menuDisplayed });
+    this.setState({ menuDisplayed: !this.state.menuDisplayed })
     if (this.state.menuDisplayed) {
       if (target === 'gallery') window.scrollConverter.activate()
       else window.scrollConverter.deactivate()
@@ -81,36 +81,36 @@ class App extends Component {
 
   navScrollIndicatorHandler() {
     if (!this.state.menuDisplayed)  {
-      this.setState({ navScrollIndicator: 1 });
-      return;
+      this.setState({ navScrollIndicator: 1 })
+      return
     }
     
-    const container = document.querySelector('.gir-header__nav');
-    const minPixel = container.offsetTop;
-    const maxPixel = minPixel + container.scrollHeight;
-    const value = container.scrollTop;
+    const container = document.querySelector('.gir-header__nav')
+    const minPixel = container.offsetTop
+    const maxPixel = minPixel + container.scrollHeight
+    const value = container.scrollTop
     
     // respect bounds of element
-    let percent = (value - minPixel) / (maxPixel - minPixel);
-    percent = Math.min(1,Math.max(percent, 0)) * 100;
+    let percent = (value - minPixel) / (maxPixel - minPixel)
+    percent = Math.min(1,Math.max(percent, 0)) * 100
 
-    let idx = Math.floor((percent / this.state.indicatorSteps)) * 2 - 1;
-    if (idx < 1) idx = 1;
-    if (idx > this.state.indicatorSteps) idx = this.state.indicatorSteps;
+    let idx = Math.floor((percent / this.state.indicatorSteps)) * 2 - 1
+    if (idx < 1) idx = 1
+    if (idx > this.state.indicatorSteps) idx = this.state.indicatorSteps
 
-    this.setState({ navScrollIndicator: idx });
+    this.setState({ navScrollIndicator: idx })
   }
 
   scrollToIdx(idx) {
     if (!this.state.menuDisplayed)  {
-      return;
+      return
     }
-    const menuBox = document.querySelector('.gir-header__nav-links').getBoundingClientRect();
+    const menuBox = document.querySelector('.gir-header__nav-links').getBoundingClientRect()
     if (menuBox.height < window.innerHeight) {
-      return;
+      return
     }
-    const ratio = Math.floor((menuBox.top + menuBox.height) / 4);
-    document.querySelector('.gir-header__nav').scrollTo(0, idx * ratio);
+    const ratio = Math.floor((menuBox.top + menuBox.height) / 4)
+    document.querySelector('.gir-header__nav').scrollTo(0, idx * ratio)
   }
 
   render() {
@@ -143,14 +143,26 @@ class App extends Component {
                     </li>
                   </CSSTransition>
                   {
-                    this.state.menuItems && this.state.menuItems.filter(item => item.published).map(item =>
+                    this.state.menuItems && this.state.menuItems.filter(item => item.published && !item.external).map(item =>
                       <CSSTransition in={this.state.menuDisplayed} key={ item.title } timeout={500} classNames="fadeSlide">
-                      <li className="nav-links__item">
-                        <Link to={`/${item.video_target ? 'video' : 'gallery'}/${item.video_target ? item.video_target.display : item.target.display}`} onClick={ this.toggleMenu.bind(this, 'gallery') }>
-                          <span className="nav-links__item-name">{ item.title }</span>
-                          <span className="nav-links__item-label">{ item.subtitle }</span>
-                        </Link>
-                      </li>
+                        <li className="nav-links__item">
+                          <Link to={`/${item.video_target ? 'video' : 'gallery'}/${item.video_target ? item.video_target.display : item.target.display}`} onClick={ this.toggleMenu.bind(this, 'gallery') }>
+                            <span className="nav-links__item-name">{ item.title }</span>
+                            <span className="nav-links__item-label">{ item.subtitle }</span>
+                          </Link>
+                        </li>
+                      </CSSTransition>
+                    )
+                  }
+                  {
+                    this.state.menuItems && this.state.menuItems.filter(item => item.published && item.external && item.external_link).map(item =>
+                      <CSSTransition in={this.state.menuDisplayed} key={ item.title } timeout={500} classNames="fadeSlide">
+                        <li className="nav-links__item">
+                          <a href={`${item.external_link}`} onClick={ this.toggleMenu.bind(this) } target="_blank">
+                            <span className="nav-links__item-name">{ item.title }</span>
+                            <span className="nav-links__item-label">{ item.subtitle }</span>
+                          </a>
+                        </li>
                       </CSSTransition>
                     )
                   }
@@ -176,8 +188,8 @@ class App extends Component {
           </Route>
         </div>
       </Router>
-    );
+    )
   }
 }
 
-export default App;
+export default App

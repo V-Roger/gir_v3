@@ -1,45 +1,43 @@
-import React, { Component } from 'react';
-import logo from '../assets/logo_vr.svg';
-import fbLogo from '../assets/facebook-logo--100x.png';
-import igLogo from '../assets/instagram-logo--96x.png';
-import emailLogo from '../assets/email-logo--128x.png';
-
+import React, { Component } from 'react'
+import logo from '../assets/logo_vr.svg'
+import fbLogo from '../assets/facebook-logo--100x.png'
+import igLogo from '../assets/instagram-logo--96x.png'
+import emailLogo from '../assets/email-logo--128x.png'
 // components
-import Loader from './loader.component';
-
+import Loader from './loader.component'
 // lib
-import axios from 'axios';
-import marked from 'marked';
+import axios from 'axios'
+import marked from 'marked'
 
 // conf
-import apiConf from '../config/api.conf.js';
+import apiConf from '../config/api.conf.js'
 
 class Contact extends Component {
   constructor(props) {
-    super(props);
-    this.state = { pageData: null, loading: true };
+    super(props)
+    this.state = { pageData: null, loading: true }
   }
 
   componentDidMount() {
-    this.fetchPageData('pages');
+    this.fetchPageData('pages')
   }
 
   fetchPageData(handle) {
-    this.setState({ loading: true });
+    this.setState({ loading: true })
     return axios.get(
       `${apiConf.baseUrl}/${apiConf.endpoints.collections}/${handle}?token=${apiConf.token}`
     ).then((collections) => {
-      this.setState({ pageData: collections.data.entries.find(entry => entry.title_slug === 'contact'), loading: false });
-    });
+      this.setState({ pageData: collections.data.entries.find(entry => entry.title_slug === 'contact'), loading: false })
+    })
   }
 
   render() {
     return(
       <section className="gir-contact">
-      { this.state.loading &&
-        <Loader/>
-      }
-      { this.state.pageData &&
+        { this.state.loading &&
+        <Loader />
+        }
+        { this.state.pageData &&
         <article className="gir-contact__content">
           {
             this.state.pageData.image &&
@@ -67,10 +65,10 @@ class Contact extends Component {
             <aside className="gir-home__contact-text" dangerouslySetInnerHTML={ { __html: marked(this.state.pageData.content) } }/>
           }
         </article>
-      }
+        }
       </section>
     )
   }
 }
 
-export default Contact;
+export default Contact

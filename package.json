@@ -3,26 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
     "autoprefixer": "7.1.6",
     "axios": "^0.17.1",
-    "babel-core": "6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
-    "babel-loader": "7.1.2",
-    "babel-preset-react-app": "^3.1.0",
-    "babel-runtime": "6.26.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-macros": "^2.4.2",
+    "babel-polyfill": "^6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
     "cheet.js": "^0.3.3",
+    "cra-append-sw": "^2.5.0",
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
-    "eslint": "4.10.0",
     "eslint-config-react-app": "^2.0.1",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.4.0",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
@@ -54,12 +56,12 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "PORT=3001 node scripts/start.js",
+    "start": "NODE_ENV='development' PORT=3001 node scripts/start.js",
     "start-lan": "NODE_ENV='lan' HOST='192.168.1.11' node scripts/start.js",
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "build-js": "node scripts/build.js",
-    "build": "npm-run-all build-css build-js",
+    "build-css": "NODE_ENV='development' node-sass-chokidar src/ -o src/",
+    "watch-css": "NODE_ENV='development' npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "build-js": "NODE_ENV='production' node scripts/build.js && cra-append-sw ./src/sw-customization.js",
+    "build": "NODE_ENV='production' npm-run-all build-css build-js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -98,10 +100,15 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "@babel/react"
     ]
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.1.0",
+    "eslint": "^5.6.0",
+    "eslint-plugin-react": "^7.11.1"
   }
 }
