@@ -41,7 +41,14 @@ class Home extends Component {
             {
               this.state.pageData.image &&
               <div className="gir-home__content-feature">
-                <img className="gir-home__content-photo" src={`${apiConf.baseUrl}/storage/uploads/${this.state.pageData.image.path}`} alt="Virgil Roger | Accueil" />
+                { this.state.pageData.link && 
+                  <a href={this.state.pageData.link} alt="">
+                    <img className="gir-home__content-photo" src={`${apiConf.baseUrl}/storage/uploads/${this.state.pageData.image.path}`} alt="Virgil Roger | Accueil" />
+                  </a>
+                }
+                { !this.state.pageData.link &&
+                  <img className="gir-home__content-photo" src={`${apiConf.baseUrl}/storage/uploads/${this.state.pageData.image.path}`} alt="Virgil Roger | Accueil" />
+                }
               </div>
             }
             <div className="gir-home__content-logo">

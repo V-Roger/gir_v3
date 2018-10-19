@@ -621,7 +621,8 @@ Instructions:
       max-width: calc(50% - 30px);
       margin: 0 auto; }
     .gir-gallery .gir-gallery__wrapper .gir-gallery__description-wrapper {
-      padding: 60px 35px 35px 35px; }
+      padding: 60px 35px 35px 35px;
+      width: 50%; }
       .gir-gallery .gir-gallery__wrapper .gir-gallery__description-wrapper:not(.gir-gallery__video-description-wrapper) {
         position: fixed;
         left: 0;
@@ -629,11 +630,11 @@ Instructions:
         width: 50%;
         height: 100%; }
       .gir-gallery .gir-gallery__wrapper .gir-gallery__description-wrapper .gir-gallery__description {
+        height: 100%;
+        width: 100%;
         text-align: justify;
         line-height: 24px;
-        -webkit-columns: 2 50%;
-        -moz-columns: 2 50%;
-        columns: 2 50%; }
+        overflow-y: scroll; }
         .gir-gallery .gir-gallery__wrapper .gir-gallery__description-wrapper .gir-gallery__description a {
           position: relative;
           display: inline-block;

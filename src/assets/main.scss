@@ -879,10 +879,14 @@ Instructions:
         height: 100%;
       }
       padding: 60px 35px 35px 35px;
+      width: 50%;
 
       & .gir-gallery__description {
+        height: 100%;
+        width: 100%;
         text-align: justify;
         line-height: 24px;
+        overflow-y: scroll;
 
         @include styled-link();
 
@@ -924,10 +928,6 @@ Instructions:
             background: white;
           }
         }
-
-        -webkit-columns: 2 50%;
-        -moz-columns: 2 50%;
-        columns: 2 50%;
       }
     }
 
