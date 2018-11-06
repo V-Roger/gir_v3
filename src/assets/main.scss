@@ -886,7 +886,7 @@ Instructions:
         width: 100%;
         text-align: justify;
         line-height: 24px;
-        overflow-y: scroll;
+        overflow-y: auto;
 
         @include styled-link();
 
